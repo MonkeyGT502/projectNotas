@@ -1,0 +1,51 @@
+# GESTOR DE NOTAS ACADÉMICAS
+INICIO
+    MIENTRAS VERDADERO HACER
+        IMPRIMIR "GESTOR DE NOTAS ACADÉMICAS"
+        IMPRIMIR "1. Registrar nuevo curso"
+        IMPRIMIR "2. Mostrar todos los cursos y notas"
+        IMPRIMIR "3. Calcular promedio general"
+        IMPRIMIR "4. Contar cursos aprobados y reprobados"
+        IMPRIMIR "5. Buscar curso por nombre"
+        IMPRIMIR "6. Actualizar nota de un curso"
+        IMPRIMIR "7. Eliminar un curso"
+        IMPRIMIR "8. Ordenar cursos por nota"
+        IMPRIMIR "9. Ordenar cursos por nombre"
+        IMPRIMIR "10. Buscar curso por nombre"
+        IMPRIMIR "11. Simular cola de solicitudes de revisión"
+        IMPRIMIR "12. Mostrar historial de cambios"
+        IMPRIMIR "13. Salir"
+        IMPRIMIR "Seleccione una opción: "
+        LEER opcion
+        SI opcion = 1 ENTONCES
+            (registrar nuevo curso)
+        SINO SI opcion = 2 ENTONCES
+            (mostrar todos los cursos y notas)
+        SINO SI opcion = 3 ENTONCES
+            (calcular promedio general)
+        SINO SI opcion = 4 ENTONCES
+            (contar cursos aprobados y reprobados)
+        SINO SI opcion = 5 ENTONCES
+            (buscar curso por nombre)
+        SINO SI opcion = 6 ENTONCES
+            (actualizar nota de un curso)
+        SINO SI opcion = 7 ENTONCES
+            (eliminar un curso)
+        SINO SI opcion = 8 ENTONCES
+            (ordenar cursos por nota)
+        SINO SI opcion = 9 ENTONCES
+            (ordenar cursos por nombre)
+        SINO SI opcion = 10 ENTONCES
+            (buscar curso por nombre)
+        SINO SI opcion = 11 ENTONCES
+            (simular cola de solicitudes de revisión)
+        SINO SI opcion = 12 ENTONCES
+            (mostrar historial de cambios)
+        SINO SI opcion = 13 ENTONCES
+            IMPRIMIR "Saliendo del sistema..."
+            SALIR DEL BUCLE
+        SINO
+            IMPRIMIR "Opción no válida. Intente nuevamente."
+        FIN_SI
+    FIN_MIENTRAS
+FIN
