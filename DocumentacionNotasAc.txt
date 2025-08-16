@@ -1,0 +1,3 @@
+Gestor de Notas Académicas
+
+El Gestor de Notas Académicas va dirigido a la administración de una Escuela, Colegio, Instituto o Universidad basándose claramente en las necesidades de administración de datos de los alumnos para llevar el control, la gestion y la información que puedan necesitar los estudiantes o padres de familia, teniendo como fin la facilidad de tener la información con un solo clic.
