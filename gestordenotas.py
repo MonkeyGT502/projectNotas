@@ -1,4 +1,5 @@
-# GESTOR DE NOTAS ACADÉMICAS
+# Se utiliza la funcion def ya que es una funcion que nos permite utilizar nuevamente un bloque 
+# de codigo cuando sea necesario realizar la llamada 
 def registrar_curso():
     print("Registrar nuevo curso")
 
@@ -35,8 +36,8 @@ def simular_cola_revision():
 def mostrar_historial_cambios():
     print("Mostrar historial de cambios")
 
-# --- Menú principal ---
-while True:
+# Muestra el Menú principal en la consola para que el usuario pueda 
+while True: 
     print("\n=== GESTOR DE NOTAS ACADÉMICAS ===")
     print("1. Registrar nuevo curso")
     print("2. Mostrar todos los cursos y notas")
@@ -52,6 +53,8 @@ while True:
     print("12. Mostrar historial de cambios")
     print("13. Salir")
 
+# se utiliza la funcion opcion para definir una entrada mediante numeracion para que puedan ingresar 
+#la numeracion de una de las opciones que necesitan seleccionar para ingresar data 
     opcion = input("\nSeleccione una opción: ")
 
     if opcion == "1":
