@@ -1,0 +1,234 @@
+# Listado de cursos
+cursos = [
+    {"nombre": "Precalculo", "nota": 100},
+    {"nombre": "Algoritmo", "nota": 100},
+    {"nombre": "Estadistica", "nota": 80},
+    {"nombre": "Derecho Informatico", "nota": 89},
+    {"nombre": "Automatas", "nota": 99}
+]
+
+cola_revisiones = []
+historial_cambios = []
+
+# Menú
+def mostrar_menu():
+    print("""
+========= MENÚ =========
+1. Registrar nuevo curso
+2. Mostrar todos los cursos y notas
+3. Calcular promedio general
+4. Contar cursos aprobados y reprobados
+5. Buscar curso por nombre (lineal)
+6. Actualizar nota de un curso
+7. Eliminar curso
+8. Ordenar cursos por nota (burbuja)
+9. Ordenar cursos por nombre (burbuja)
+10. Buscar curso por nombre (binaria)
+11. Simular cola de solicitudes de revisión
+12. Mostrar historial de cambios (pila)
+13. Salir""")
+
+
+# Registrar cursos
+def registrar_curso():
+    try:
+        n = int(input("¿Cuántos cursos desea registrar? "))
+    except ValueError:
+        print("Ingrese un número válido")
+        return
+    for i in range(n):
+        nombre = input(f"Ingrese el nombre del curso {i+1}: ").strip()
+        if any(c["nombre"].lower() == nombre.lower() for c in cursos):
+            print("Ese curso ya existe.")
+            continue
+        try:
+            nota = float(input(f"Ingrese la nota de {nombre}: "))
+            if 0 <= nota <= 100:
+                cursos.append({"nombre": nombre, "nota": nota})
+            else:
+                print("La nota debe estar entre 0 y 100")
+        except ValueError:
+            print("Nota inválida")
+
+# Mostrar cursos
+def mostrar_cursos():
+    if not cursos:
+        print("No hay cursos registrados.")
+    else:
+        for c in cursos:
+            print(f"{c['nombre']}: {c['nota']}")
+
+# Promedio
+def promedio():
+    if cursos:
+        prom = sum(c["nota"] for c in cursos) / len(cursos)
+        print(f"Promedio general: {prom:.2f}")
+    else:
+        print("No hay cursos.")
+
+# Aprobados y reprobados
+def cursos_aprobados_reprobados():
+    aprobados = [c for c in cursos if c["nota"] >= 61]
+    reprobados = [c for c in cursos if c["nota"] < 61]
+    print("\nAprobados:")
+    for c in aprobados:
+        print(f"{c['nombre']} - {c['nota']}")
+    print("\nReprobados:")
+    for c in reprobados:
+        print(f"{c['nombre']} - {c['nota']}")
+
+# Búsqueda lineal
+def buscar_curso():
+    nombre = input("Ingrese el curso a buscar: ").strip().lower()
+    for c in cursos:
+        if c["nombre"].lower() == nombre:
+            estado = "Aprobado" if c["nota"] >= 61 else "Reprobado"
+            print(f"{c['nombre']} - Nota: {c['nota']} ({estado})")
+            return
+    print("Curso no encontrado.")
+
+# Actualizar nota
+def actualizar_nota():
+    nombre = input("Curso a actualizar: ").strip().lower()
+    for c in cursos:
+        if c["nombre"].lower() == nombre:
+            print(f"Nota actual: {c['nota']}")
+            try:
+                nueva = float(input("Nueva nota: "))
+                if 0 <= nueva <= 100:
+                    historial_cambios.append(f"{c['nombre']}: {c['nota']} -> {nueva}")
+                    c["nota"] = nueva
+                    print("Nota actualizada.")
+                else:
+                    print("Nota inválida.")
+            except ValueError:
+                print("Número inválido.")
+            return
+    print("Curso no encontrado.")
+
+# Eliminar curso
+def borrar_curso():
+    nombre = input("Curso a eliminar: ").strip().lower()
+    for c in cursos:
+        if c["nombre"].lower() == nombre:
+            cursos.remove(c)
+            print("Curso eliminado.")
+            return
+    print("Curso no encontrado.")
+
+# Ordenar por nota (burbuja)
+def ordenar_por_nota():
+    n = len(cursos)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if cursos[j]["nota"] > cursos[j+1]["nota"]:
+                cursos[j], cursos[j+1] = cursos[j+1], cursos[j]
+    print("Ordenado por nota.")
+
+# Ordenar por nombre (burbuja)
+def ordenar_por_nombre():
+    n = len(cursos)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if cursos[j]["nombre"].lower() > cursos[j+1]["nombre"].lower():
+                cursos[j], cursos[j+1] = cursos[j+1], cursos[j]
+    print("Ordenado alfabéticamente.")
+
+# Búsqueda binaria
+def buscar_curso_binario():
+    ordenar_por_nombre()
+    nombre = input("Curso a buscar: ").strip().lower()
+    izquierda, derecha = 0, len(cursos)-1
+    while izquierda <= derecha:
+        medio = (izquierda+derecha)//2
+        if cursos[medio]["nombre"].lower() == nombre:
+            print(f"Encontrado: {cursos[medio]['nombre']} - Nota: {cursos[medio]['nota']}")
+            return
+        elif nombre < cursos[medio]["nombre"].lower():
+            derecha = medio - 1
+        else:
+            izquierda = medio + 1
+    print("Curso no encontrado.")
+
+# Cola de revisiones (lista usada como cola)
+def simular_cola_revision():
+    while True:
+        print("\n1. Agregar solicitud\n2. Atender solicitud\n3. Ver cola\n4. Salir")
+        try:
+            op = int(input("Opción: "))
+        except ValueError:
+            continue
+        if op == 1:
+            nombre = input("Curso a revisar: ").strip().lower()
+            if any(c["nombre"].lower() == nombre for c in cursos):
+                cola_revisiones.append(nombre)
+                print("Solicitud agregada.")
+            else:
+                print("Curso no encontrado.")
+        elif op == 2:
+            if cola_revisiones:
+                curso_nombre = cola_revisiones.pop(0)
+                for c in cursos:
+                    if c["nombre"].lower() == curso_nombre:
+                        print(f"Revisando {c['nombre']} (nota actual {c['nota']})")
+                        try:
+                            nueva = float(input("Nueva nota: "))
+                            if 0 <= nueva <= 100:
+                                historial_cambios.append(f"{c['nombre']}: {c['nota']} -> {nueva}")
+                                c["nota"] = nueva
+                                print("Nota revisada.")
+                            else:
+                                print("Nota inválida.")
+                        except ValueError:
+                            print("Número inválido.")
+                        break
+            else:
+                print("Cola vacía.")
+        elif op == 3:
+            print(cola_revisiones or "Cola vacía.")
+        elif op == 4:
+            break
+
+# Mostrar historial
+def mostrar_historial():
+    if historial_cambios:
+        print("\nHistorial de cambios:")
+        for h in reversed(historial_cambios):
+            print(h)
+    else:
+        print("Historial vacío.")
+
+# Salir
+def salir():
+    print("Saliendo del programa...")
+    return False
+
+# Opciones
+opciones = {
+    1: registrar_curso,
+    2: mostrar_cursos,
+    3: promedio,
+    4: cursos_aprobados_reprobados,
+    5: buscar_curso,
+    6: actualizar_nota,
+    7: borrar_curso,
+    8: ordenar_por_nota,
+    9: ordenar_por_nombre,
+    10: buscar_curso_binario,
+    11: simular_cola_revision,
+    12: mostrar_historial,
+    13: salir
+}
+
+# Loop principal
+while True:
+    mostrar_menu()
+    try:
+        op = int(input("\nElija una opción: "))
+    except ValueError:
+        continue
+    if op in opciones:
+        if opciones[op]() == False:
+            break
+    else:
+        print("\nOpción inválida")
